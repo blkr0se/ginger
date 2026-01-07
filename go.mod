@@ -3,7 +3,7 @@ module github.com/blkr0se/ginger
 go 1.24.0
 
 require (
-	github.com/blkr0se/shun v0.0.0-20260106220333-2386bf672262
+	github.com/blkr0se/shun v0.0.0-20260107205748-a3ffdcd8c9af
 	github.com/urfave/cli/v3 v3.6.1
 )
 

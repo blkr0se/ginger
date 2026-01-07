@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/blkr0se/ginger/cmd/ssh"
 	"github.com/blkr0se/ginger/cmd/upload"
 	"github.com/blkr0se/ginger/internal/cmd"
 	"github.com/urfave/cli/v3"
@@ -23,6 +24,7 @@ func main() {
 		},
 		Commands: []*cli.Command{
 			upload.UploadCmd(),
+			ssh.SshCmd(),
 		},
 	}
 
