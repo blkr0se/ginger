@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/blkr0se/ginger/internal/cmd"
+	"github.com/blkr0se/shun"
 	"github.com/urfave/cli/v3"
 )
 
@@ -13,10 +13,19 @@ func SshCmd() *cli.Command {
 		Name:  "ssh",
 		Usage: "connect to a server via ssh",
 		Action: func(ctx context.Context, c *cli.Command) error {
-			conn := cmd.NewConnector(c)
-			connString := fmt.Sprintf("%s@%s", conn.User, conn.Ip)
+			args := []string{
+				fmt.Sprintf("%s@%s", c.String("username"), c.String("host")),
+				"-p",
+				c.String("port"),
+			}
 
-			if err := conn.Interactive(connString); err != nil {
+			provider := shun.NewBinProvider(args...)
+
+			if err := provider.Connect(); err != nil {
+				return err
+			}
+
+			if err := provider.Wait(); err != nil {
 				return err
 			}
 
