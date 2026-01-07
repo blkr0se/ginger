@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/blkr0se/ginger/cmd/flags"
 	"github.com/blkr0se/ginger/cmd/ssh"
 	"github.com/blkr0se/ginger/cmd/upload"
-	"github.com/blkr0se/ginger/internal/cmd"
 	"github.com/urfave/cli/v3"
 )
 
@@ -17,10 +17,10 @@ func main() {
 		// UseShortOptionHandling,
 		Usage: "manage a remote server/homelab",
 		Flags: []cli.Flag{
-			cmd.ServerUsernameFlag,
-			cmd.ServerHostIpFlag,
-			cmd.ServerSshPortFlag,
-			cmd.ServerSshKeyFlag,
+			flags.ServerUsernameFlag,
+			flags.ServerHostIpFlag,
+			flags.ServerSshPortFlag,
+			flags.ServerSshKeyFlag,
 		},
 		Commands: []*cli.Command{
 			upload.UploadCmd(),

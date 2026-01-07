@@ -3,8 +3,8 @@ package upload
 import (
 	"context"
 
-	"github.com/blkr0se/ginger/internal/cmd"
-	"github.com/blkr0se/ginger/internal/upload"
+	"github.com/blkr0se/ginger/cmd/flags"
+	"github.com/blkr0se/shun"
 	"github.com/urfave/cli/v3"
 )
 
@@ -24,13 +24,14 @@ func UploadCmd() *cli.Command {
 			},
 		},
 		Action: func(ctx context.Context, c *cli.Command) error {
-			conn := cmd.NewConnector(c)
-			svc, err := upload.NewUploadService(conn)
+			// TODO: replace newConnector with NativeSshProvider.
+			conn := newConnector(c)
+			svc, err := NewUploadService(conn)
 			if err != nil {
 				return err
 			}
 
-			req := upload.NewUploadRequest(c.String("src"), c.String("dst"))
+			req := NewUploadRequest(c.String("src"), c.String("dst"))
 
 			if err := svc.Upload(ctx, req); err != nil {
 				return err
@@ -38,5 +39,15 @@ func UploadCmd() *cli.Command {
 
 			return nil
 		},
+	}
+}
+
+// Deprecated
+func newConnector(c *cli.Command) *shun.SshConnector {
+	return &shun.SshConnector{
+		User:    c.String(flags.ServerUsernameFlag.Name),
+		Ip:      c.String(flags.ServerHostIpFlag.Name),
+		Port:    c.String(flags.ServerSshPortFlag.Name),
+		KeyFile: c.String(flags.ServerSshKeyFlag.Name),
 	}
 }

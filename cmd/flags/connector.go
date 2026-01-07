@@ -1,8 +1,6 @@
-package cmd
+package flags
 
-import (
-	"github.com/urfave/cli/v3"
-)
+import "github.com/urfave/cli/v3"
 
 var (
 	ServerUsernameFlag = &cli.StringFlag{
